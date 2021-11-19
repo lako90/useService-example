@@ -1,12 +1,23 @@
 import { ApiGroup } from 'axios-actions';
-import mainAxiosInstance from '../libraries/axios/instance';
+import { authAxiosInstance, mainAxiosInstance } from '../libraries/axios/instance';
 import actions from '../libraries/axios/actions';
+import { isAuthEntity, isNotAuthEntity } from './utils';
 
-const actionsReducer = (accumulator, [entity, entityAction]) => ({
+const getActionsReducer = (axiosInstance) => (accumulator, [entity, entityAction]) => ({
   ...accumulator,
-  [entity]: new ApiGroup(mainAxiosInstance, entityAction),
+  [entity]: new ApiGroup(axiosInstance, entityAction),
 });
 
-const apis = Object.entries(actions).reduce(actionsReducer, {});
+const authApis = Object
+  .entries(actions)
+  .filter(isAuthEntity)
+  .reduce(getActionsReducer(authAxiosInstance), {});
+
+const mainApis = Object
+  .entries(actions)
+  .filter(isNotAuthEntity)
+  .reduce(getActionsReducer(mainAxiosInstance), {});
+
+const apis = { ...authApis, ...mainApis };
 
 export default apis;
