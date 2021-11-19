@@ -1,0 +1,21 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "airbnb",
+    "plugin:react/jsx-runtime"
+  ],
+  "plugins": [
+    "react-hooks"
+  ],
+  "globals": {
+    "localStorage": true,
+    "fetch": true,
+    "window": true,
+    "document": true,
+    "FormData": true,
+    "File": true
+  },
+  "rules": {
+    "react/no-danger": "off"
+  }
+}
