@@ -1,5 +1,5 @@
 const actions = {
-  login: 'GET basic-auth/:user/:password',
+  signin: 'GET basic-auth/:user/:password',
 };
 
 export default actions;

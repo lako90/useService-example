@@ -1,8 +1,12 @@
 import { ApiGroup } from 'axios-actions';
-import { authAxiosInstance, mainAxiosInstance } from '../libraries/axios/instance';
-import actions from '../libraries/axios/actions';
+import get from 'lodash/get';
+import { authAxiosInstance, mainAxiosInstance } from '../axios/instance';
+import actions from '../axios/actions';
 import { isAuthEntity, isNotAuthEntity } from './utils';
 
+/**
+ * Return a ApiGroup for related entity
+ */
 const getActionsReducer = (axiosInstance) => (accumulator, [entity, entityAction]) => ({
   ...accumulator,
   [entity]: new ApiGroup(axiosInstance, entityAction),
@@ -20,4 +24,6 @@ const mainApis = Object
 
 const apis = { ...authApis, ...mainApis };
 
-export default apis;
+const getApi = (entityAction) => entityAction && get(apis, entityAction);
+
+export { apis, getApi };

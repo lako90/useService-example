@@ -8,12 +8,10 @@ import {
   Paper,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import useServices from '../hooks/useServices';
+import usePosts from '../../services/usePosts';
 
 const Posts = ({ selectedPostId, setSelectedPostId }) => {
-  const [{ loading: loadingDelete }, deletePosts] = useServices('posts.delete', { immediate: false });
-  const [{ loading: loadingRead, data }, readPosts] = useServices('posts.read');
-  const isLoading = loadingDelete || loadingRead;
+  const [{ loading, data }, { deletePosts, readPosts }] = usePosts();
 
   const handleSelectClick = (postId) => () => {
     setSelectedPostId(postId);
@@ -25,7 +23,7 @@ const Posts = ({ selectedPostId, setSelectedPostId }) => {
     await readPosts();
   };
 
-  if (isLoading) return 'loading...';
+  if (loading) return 'loading...';
 
   return (
     <Paper sx={{ maxWidth: 600 }}>
@@ -42,7 +40,7 @@ const Posts = ({ selectedPostId, setSelectedPostId }) => {
               >
                 <DeleteIcon />
               </IconButton>
-          )}
+            )}
           >
             <ListItemButton
               selected={selectedPostId === id}

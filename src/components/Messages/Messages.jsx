@@ -7,10 +7,10 @@ import {
   Paper,
   Divider,
 } from '@mui/material';
-import useServices from '../hooks/useServices';
+import useMessages from '../../services/useMessages';
 
 const Messages = ({ postId }) => {
-  const [{ loading, data }, readComments] = useServices('posts.comments', { immediate: false });
+  const [{ loading, data }, { readComments }] = useMessages();
 
   useEffect(() => {
     if (postId) {

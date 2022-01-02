@@ -1,6 +1,5 @@
 import { useEffect, useReducer, useCallback } from 'react';
-import get from 'lodash/get';
-import apis from '../apis';
+import { getApi } from '../libraries/apis';
 
 const initialState = {
   loading: false,
@@ -45,7 +44,7 @@ const useServices = (entityAction, { immediate = true, params } = {}) => {
   const serviceExecuter = useCallback(async (serviceParams) => {
     setServiceState({ type: 'loading' });
     try {
-      const service = get(apis, entityAction);
+      const service = getApi(entityAction);
       const { data } = await service(serviceParams);
       setServiceState({ type: 'success', payload: data });
 
